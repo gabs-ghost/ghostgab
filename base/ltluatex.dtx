@@ -380,7 +380,7 @@
 %
 % \noindent
 % \DescribeMacro{create_callback}
-% |luatexbase.create_callback(|\meta{name},meta{type},\meta{default}|)|
+% |luatexbase.create_callback(|\meta{name},\meta{type},\meta{default}|)|
 % Defines a user defined callback. The last argument is a default
 % function or |false|.
 %
@@ -388,6 +388,34 @@
 % \DescribeMacro{call_callback}
 % |luatexbase.call_callback(|\meta{name},\ldots|)|
 % Calls a user defined callback with the supplied arguments.
+%
+% \noindent
+% \DescribeMacro{declare_callback_rule}
+% |luatexbase.declare_callback_rule(|\meta{name}, \meta{first}, \meta{relation}, \meta{second}|)|
+% Adds an ordering constraint between two callback functions for callback \meta{name}.
+%
+% The kind of constraint added depends on \meta{relation}:
+% \begin{description}
+%   \item[before] The callback function with description \meta{first} will be
+%     executed before the function with description \meta{second}.
+%   \item[after] The callback function with description \meta{first} will be
+%     executed after the function with description \meta{second}.
+%   \item[incompatible-warning] When both a callback function with description \meta{first}
+%     and with description \meta{second} is registered, then a warning is printed when
+%     the callback is executed.
+%   \item[incompatible-error] When both a callback function with description \meta{first}
+%     and with description \meta{second} is registered, then an error is printed when
+%     the callback is executed.
+%   \item[unrelated] Any previously declared callback rule between \meta{first}
+%     and \meta{second} gets disabled.
+% \end{description}
+% Every call to \texttt{declare_callback_rule} with a specific callback \meta{name}
+% and descriptions \meta{first} and \meta{second} overwrites all previous calls with
+% same callback and descriptions.
+%
+% The callback functions do not have to be registered yet when the functions is called.
+% Ony the constraints for which both callback descriptions refer to callbacks
+% registered at the time the callback is called will have an effect.
 %
 % \endgroup
 %
